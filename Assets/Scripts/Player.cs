@@ -20,7 +20,7 @@ public class Player : MonoBehaviour {
 
     public float speed = 100f;
 
-    private Direction facing;
+    public Direction facing;
 
     private bool isWalking;
     public bool isAttacking;
