@@ -23,14 +23,12 @@ public class Player : MonoBehaviour {
     private Direction facing;
 
     private bool isWalking;
-    private bool isAttacking;
+    public bool isAttacking;
     private int health;
     private int maxHealth = 4;
     private int keyCount = 0;
 
-
-
-    private float attackTime;
+    public float attackTime;
     private float currTime;
     private float walkingTime = 0;
     private int animationTracker = 0;
@@ -225,8 +223,48 @@ public class Player : MonoBehaviour {
     {
         if(collision.transform.tag == "Enemy")
         {
-            //Lose health
-            health--;
+            if (isAttacking)
+            {
+                Vector3 unitVec = new Vector3(transform.position.x - collision.transform.position.x, transform.position.y - collision.transform.position.y, 0).normalized;
+                GameObject tempEnemy = collision.gameObject;
+                Enemy enemy = tempEnemy.GetComponent<Enemy>();
+                switch (facing)
+                {
+                    case Direction.North:
+                        if(unitVec == Vector3.up)
+                        {
+                            enemy.health--;
+                        }
+                        break;
+                    case Direction.South:
+                        if (unitVec == Vector3.down) 
+                        {
+                            enemy.health--;
+                        }
+                        break;
+                    case Direction.East:
+                        if (unitVec == Vector3.right)
+                        {
+                            enemy.health--;
+                        }
+                        break;
+                    case Direction.West:
+                        if (unitVec == Vector3.left)
+                        {
+                            enemy.health--;
+                        }
+                        break;
+                    default: break;
+                }//swtich
+                
+
+            }
+            else
+            {
+                //Lose health
+                health--;
+            }
+            
         }
         if(collision.transform.tag == "Beer")
         {
