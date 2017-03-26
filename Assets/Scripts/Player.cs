@@ -26,7 +26,7 @@ public class Player : MonoBehaviour {
     public bool isAttacking;
     private int health;
     private int maxHealth = 4;
-    private int keyCount = 0;
+    public int keyCount = 0;
 
     public float attackTime;
     private float currTime;
