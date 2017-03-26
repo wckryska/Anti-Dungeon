@@ -24,6 +24,9 @@ public class Player : MonoBehaviour {
 
     private bool isWalking;
     private bool isAttacking;
+    private int health;
+    private int maxHealth = 4;
+    private int keyCount = 0;
 
 
 
@@ -39,6 +42,7 @@ public class Player : MonoBehaviour {
         isAttacking = false;
         facing = Direction.South;
         speed = 2.0f;
+        health = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -215,12 +219,40 @@ public class Player : MonoBehaviour {
 
     }
 
+    
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.gameObject.tag == "Enemy")
+        if(collision.transform.tag == "Enemy")
         {
+            //Lose health
+            health--;
+        }
+        if(collision.transform.tag == "Beer")
+        {
+            if(health < maxHealth)
+            {
+                health++;
+                Destroy(collision.gameObject);
+            }
             
         }
+        if(collision.transform.tag == "Key")
+        {
+            keyCount++;
+            Destroy(collision.gameObject);
+        }
+        if(collision.transform.tag == "Door")
+        {
+            if(keyCount > 0)
+            {
+                keyCount--;
+                //Door opens
+            }
+        }
+
+
+
     }
 
 
